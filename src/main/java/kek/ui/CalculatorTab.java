@@ -8,6 +8,7 @@ import kek.math.ops.GcdOperation;
 import kek.math.ops.ModuloOperation;
 import kek.math.ops.SimpleArithmeticOperation;
 import kek.ui.util.ArrayListModel;
+import kek.ui.util.IntegerTextField;
 import kek.ui.util.ItemSwitcher;
 
 import javax.swing.*;
@@ -111,7 +112,9 @@ public final class CalculatorTab extends JPanel {
 
             for (Operation.Parameter parameter : algorithm.operation().getParameters()) {
                 JLabel parameterLabel = new JLabel(parameter.description());
-                JFormattedTextField parameterInput = new JFormattedTextField(BigInteger.ZERO);
+
+                JTextField parameterInput = new IntegerTextField();
+                parameterInput.setText("0");
 
                 parameterLabel.setFont(Fonts.TEXT_FONT);
                 parameterInput.setFont(Fonts.TEXT_FONT);
@@ -134,8 +137,8 @@ public final class CalculatorTab extends JPanel {
         public List<LogEntry> invokeAlgorithm() {
             return algorithm.operation().apply(
                     Arrays.stream(getComponents())
-                            .filter(c -> c instanceof JFormattedTextField)
-                            .map(c -> new BigIntegerNumeric((BigInteger) ((JFormattedTextField) c).getValue()))
+                            .filter(c -> c instanceof JTextField)
+                            .map(c -> new BigIntegerNumeric(new BigInteger(((JTextField) c).getText())))
                             .toList()
             );
         }

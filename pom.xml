@@ -12,7 +12,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <compiler.maven.plugin.version>3.14.0</compiler.maven.plugin.version>
-        <exec.maven.plugin.version>3.5.0</exec.maven.plugin.version>
         <native.maven.plugin.version>0.10.6</native.maven.plugin.version>
     </properties>
 
@@ -25,28 +24,6 @@
                 <configuration>
                     <release>17</release>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec.maven.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>java-agent</id>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>java</executable>
-                            <workingDirectory>${project.build.directory}</workingDirectory>
-                            <arguments>
-                                <argument>-classpath</argument>
-                                <classpath/>
-                                <argument>kek.Main</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
@@ -64,22 +41,14 @@
                 </executions>
                 <configuration>
                     <mainClass>kek.Main</mainClass>
+                    <systemProperties>
+                        <java.awt.headless>false</java.awt.headless>
+                    </systemProperties>
                     <buildArgs>
-                        <buildArg>-Os</buildArg>
+                        <buildArg>-O3</buildArg>
                         <buildArg>--no-fallback</buildArg>
-                        <buildArg>-H:+ForeignAPISupport</buildArg>
                     </buildArgs>
                     <outputDirectory>${project.build.directory}/native-executable</outputDirectory>
-                    <agent>
-                        <enabled>true</enabled>
-                        <metadataCopy>
-                            <disabledStages>
-                                <stage>test</stage>
-                            </disabledStages>
-                            <merge>true</merge>
-                            <outputDirectory>src/main/resources/META-INF/native-image</outputDirectory>
-                        </metadataCopy>
-                    </agent>
                 </configuration>
             </plugin>
         </plugins>

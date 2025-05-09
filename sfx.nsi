@@ -1,6 +1,6 @@
 SilentInstall silent
 RequestExecutionLevel user
-OutFile app.exe
+OutFile congruence-meme.exe
 
 SetCompressor lzma
 

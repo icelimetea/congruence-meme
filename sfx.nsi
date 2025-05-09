@@ -20,7 +20,7 @@ Section
     File target\native-executable\jvm.dll
     File target\native-executable\lcms.dll
 
-    ExecWait '"$PLUGINSDIR\congruence-meme.exe"'
+    nsExec::Exec '"$PLUGINSDIR\congruence-meme.exe"'
 
     SetOutPath $TEMP
 SectionEnd

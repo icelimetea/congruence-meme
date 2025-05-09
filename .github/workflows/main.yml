@@ -2,10 +2,7 @@ name: Build project
 on: [push]
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ 'windows-latest', 'ubuntu-latest' ]
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-2022
     steps:
       - name: Checkout the source code
         uses: actions/checkout@v4.2.2
@@ -17,8 +14,10 @@ jobs:
           distribution: 'liberica'
       - name: Run Maven build
         run: mvn clean package -DskipTests -B
+      - name: Build a self-contained executable
+        run: makensis sfx.nsi
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.6.2
         with:
-          name: congruence-meme-${{ matrix.os }}
-          path: target/native-executable
+          name: congruence-meme.exe
+          path: app.exe

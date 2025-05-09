@@ -1,12 +1,11 @@
 SilentInstall silent
 RequestExecutionLevel user
-
 OutFile app.exe
+
+SetCompressor lzma
 
 Section
     InitPluginsDir
-    SetCompressor lzma
-
     SetOutPath $PLUGINSDIR
 
     File target\native-executable\congruence-meme.exe
@@ -21,7 +20,7 @@ Section
     File target\native-executable\jvm.dll
     File target\native-executable\lcms.dll
 
-    SetOutPath $TEMP
-
     ExecWait '"$PLUGINSDIR\congruence-meme.exe"'
+
+    SetOutPath $TEMP
 SectionEnd
